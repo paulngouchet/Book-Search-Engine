@@ -1,0 +1,198 @@
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<div class="container" id="app">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>BOOK SEARCH</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-3">
+            <form action="" class="search-form">
+                <div class="form-group has-feedback">
+                    <label for="search" class="sr-only">Search</label>
+                    <input type="text" class="form-control" name="search" id="search" placeholder="search" v-model="query" >
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" v-for="result in results">
+          <div id="parent">
+            <div id="hover-content">
+              <div class="card">
+        <img :src="result._source.thumbnail" alt="Avatar" style="width:100%">
+      </div>
+    </div>
+
+            <div class="panel panel-shadow">
+                <div class="panel-body">
+                    <p>{{ result._source.text }}</p>
+                </div>
+            </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            results: [],
+            query: ''
+        },
+        methods: {
+            search: function() {
+                axios.get("http://127.0.0.1:3001/search?q=" + this.query)
+                    .then(response => {
+                        this.results = response.data;
+
+                    })
+            }
+        },
+        watch: {
+            query: function(){
+              this.search();
+            }
+        }
+
+    })
+</script>
+<style>
+
+  @import
+   url(https://fonts.googleapis.com/css?family=Patua+One);
+
+   
+    .search-form .form-group {
+        float: right !important;
+        transition: all 0.35s, border-radius 0s;
+        width: 32px;
+        height: 32px;
+        background-color: #fff;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+    }
+
+    .search-form .form-group input.form-control {
+        padding-right: 20px;
+        border: 0 none;
+        background: transparent;
+        box-shadow: none;
+        display: block;
+    }
+
+    .search-form .form-group input.form-control::-webkit-input-placeholder {
+        display: none;
+    }
+
+    .search-form .form-group input.form-control:-moz-placeholder {
+        /* Firefox 18- */
+        display: none;
+    }
+
+    .search-form .form-group input.form-control::-moz-placeholder {
+        /* Firefox 19+ */
+        display: none;
+    }
+
+    .search-form .form-group input.form-control:-ms-input-placeholder {
+        display: none;
+    }
+
+    .search-form .form-group:hover,
+    .search-form .form-group.hover {
+        width: 100%;
+        border-radius: 4px 25px 25px 4px;
+    }
+
+    .search-form .form-group span.form-control-feedback {
+        position: absolute;
+        top: -1px;
+        right: -2px;
+        z-index: 2;
+        display: block;
+        width: 34px;
+        height: 34px;
+        line-height: 34px;
+        text-align: center;
+        color: #3596e0;
+        left: initial;
+        font-size: 14px;
+    }
+
+    .well-link {
+    text-decoration: none;
+}
+.panel-shadow {
+    box-shadow: 0 10px 12px 3px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 5px 5px -3px rgba(0, 0, 0, .2);
+}
+
+p { font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+ font-size: 14px;
+ font-style: normal;
+ font-variant: normal;
+ font-weight: 400;
+ line-height: 20px; }
+
+
+
+ body {background-color:#F2DBAE;}
+
+ h1 {
+   background-color:#c66;
+   width:200px; height:80px;
+   line-height:80px;
+   font-size:60px;
+   text-align:center;
+   position:relative;
+   margin:100px auto;
+   font-family: 'Patua One', cursive;
+   color:#fff;
+   }
+
+ h1:before, h1:after {
+   background-color:#a44;
+   width:50px; height:80px;
+   content:'';
+   display:block;
+   transform:skewY(20deg);
+   position:absolute;
+   z-index:-1;
+ }
+
+ h1:before {top:10px; left:0; }
+ h1:after {top:-10px; right:0; }
+
+
+
+ #hover-content {
+    display:none;
+}
+#parent:hover #hover-content {
+    display:block;
+}
+
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 55%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+</style>
