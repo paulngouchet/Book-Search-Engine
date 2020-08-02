@@ -18,7 +18,6 @@ client.ping({
      }
  });
 
-
 app.use(bodyParser.json())
 app.set( 'port', process.env.PORT || 3001 );
 app.use( express.static( path.join( __dirname, 'public' )));
@@ -36,8 +35,6 @@ app.get('/', function(req, res){
    });
 })
 
-
-
 app.get('/v2', function(req, res){
   //console.log("i was clicked Billi")
   current_book = req.query.color
@@ -54,7 +51,6 @@ app.get('/current', function(req, res){
 })
 
 app.get('/search', function (req, res){
-
   let body = {
     size: 200,
     from: 0,
@@ -64,7 +60,6 @@ app.get('/search', function (req, res){
                "query" : req.query['q']
 
            }
-
       }
     }
   }
@@ -81,11 +76,6 @@ app.get('/search', function (req, res){
   });
 
 })
-
-
-
-
-
 
 app .listen( app.get( 'port' ), function(){
   console.log( 'Express server listening on port ' + app.get( 'port' ));
